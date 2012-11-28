@@ -1,0 +1,515 @@
+
+
+CPAN 是 Comprehensive Perl Archive Network 的缩写，中译为 Perl 综合典藏网。它包含了极多用 Perl 写成的软件和模块。
+
+CPAN相关软件的安装方法
+
+最近几天安装SPAMASSASSIN，牵涉到许多CPAN的安装，以前都是缺少什么，就去CPAN网站寻找相应的模块，自己编译安装，后来发现其实CPAN自己的shell命令就可以很方便的安装相应模块，真是方便
+
+当然前提你必须安装perl-CPAN，在我的redhat9.0上的版本是perl-CPAN-1.61-88，大家没装的话，直接用光盘的rpm包安装即可。
+
+安装后运行
+
+[root@www CPAN]# perl -MCPAN -e shell 
+
+cpan shell -- CPAN exploration and modules installation (v1.61)
+ReadLine support available (try 'install Bundle::CPAN')
+
+cpan> 
+
+进入cpan的shell，好了，我为了安装spamassassin，需要安装以下几个
+
+  install Digest::SHA1
+  install HTML::Parser
+  install Storable
+  install DB_File
+  install Net::DNS
+  install Net::SMTP
+  install Mail::SPF::Query
+  install IP::Country::Fast
+  install IO::Socket::SSL
+  install Time::HiRes
+  install DBI
+
+是不是很方便呀，不用再单独下载编译安装了，
+
+
+类型  字符  例子  用于哪种名字  
+标量  $  $cents  一个独立的数值（数字或字串）  
+数组  @  @large  一列数值，用编号做键字  
+散列  %  %interest  一组数值，用字串做键字  
+子过程  &  &how  一段可以调用的 Perl 代码  
+类型团  *  *struck  所有叫 struck 的东西 
+
+
+手册页  内容  
+perl  有些什么 perl 手册页  
+perldata  数据类型  
+perlsyn  语法  
+perlop  操作符和优先级  
+perlre  正则表达式  
+perlvar  预定义变量  
+perlsub  子过程  
+prelfunc  内建函数  
+perlmod  如何令 Perl 模块工作  
+perlref  参考手册  
+perlobj  对象  
+perlipc  进程间通讯  
+perlrun  如何运行 Perl 命令，以及命令行开关  
+perldebug  调试  
+perldiag  诊断信息  
+% perlop comma 
+
+% perlfunc split 
+
+% perlvar ARGV 
+
+% perldiag 'assigned to typeglob' 
+% perlfaq round 
+
+perltoc 命令（自己也是一个手册页）搜索所有手册页收集的目录
+% perltoc typeglob perl5005delta: Undefined value assigned to typeglob perldata: Typeglobs and Filehandles perldiag: Undefined value assigned to typeglob 或者搜索全部 Perl 在线文档，包括所有头，描述，和例子，对于任何字串的实例，使用 perlhelp 命令： % perlhelp CORE::GLOBAL 
+
+参阅 perldoc 手册页获取细节。
+
+
+手册页  内容  
+perlfaq1  关于 Perl 的通用信息  
+perlfaq2  获取和学习 Perl  
+perlfaq3  编程工具  
+perlfaq4  数据操作  
+perlfaq5  文件和格式  
+perlfaq6  正则表达式  
+perlfaq7  通用 Perl 语言信息  
+perlfaq8  系统交互  
+perlfaq9  网络  
+手册页  内容  
+perlamiga  Amiga 移植  
+perlcygwin  Cygwin 移植  
+perldos  MS-DOS 移植  
+perlhpux  HP-UX 移植  
+perlmachten  Power MachTen? 移植  
+perlos2  OS/2 移植  
+perlos390  OS/390 移植  
+perlvms  DEC VMS 移植  
+perlwin32  MS-Windows 移植  
+
+比较  数字  字串  返回值  
+等于  ==  eq  如果 $a 等于 $b 返回真  
+不等于  =  ne  如果 $a 不等于 $b 返回真  
+小于  <  lt  如果 $a 小于 $b 返回真  
+大于  >  gt  如果 $a 大于 $b 返回真  
+小于或等于  <= </td> le  如果 $a 不大于 $b 返回真  
+比较  <=>  cmp  相等时为 0，如果 $a 大为 1 如果 $b 大为 -1 
+例子  名字  结果  
+-e $a  存在  如果在 $a 中命名的文件存在则为真  
+-r $a  可读  如果在 $a 中命名的文件可读则为真  
+-w $a  可写  如果在 $a 中命名的文件可写则为真  
+-d $a  目录  如果在 $a 中命名的文件是目录则为真  
+-f $a  文件  如果在 $a 中命名的文件是普通文件则为真  
+-T $a  文本文件  如果在 $a 中命名的文件是文本文件则为真  
+
+名字  ASCII 定义  代码  
+空白  [\t\n\r\f]  \s  
+词  [a-zA-Z_0-9]  \w  
+数字  [0-9]  \d 
+
+还有一件你必须知道的事情，缺省时量词作用在它前面的单个字符上，因此 /bam{2}/ 将匹配 “bamm”而不是“bambam”。如果你要对多于一个字符使用量词，你需要使用圆括弧，因此为了匹配“bambam”需要使用 /(bam){2}/。 
+
+
+构造  含义  
+$days  简单标量值 $days  
+$days[28]  数组 @days 的第二十九个元素  
+$days{'Feb'}  散列 %days 的“Feb”值  
+构造  含义  
+${days}  和 $days 一样，不过在字母数字前面不易混淆  
+$Dog::days  在 Dog 包里面的不同的 $days 变量  
+$#days  数组 @days 的最后一个索引  
+$days->[28]  $days一个引用指向的数组的第二十九个元素  
+$days[0][2]  多维数组  
+$days{200}{'Feb'}  多维散列  
+$days{2000,'Feb'}  多维散列枚举 
+构造  含义  
+@days  包含（$days[0],$days[1],...$days[n]）的数组  
+@days[3,4,5]  包含（$days[3],$days[4],$days[5]）数组片段的数组  
+@days[3..5]  包含（$days[3],$days[4],$days[5]）数组片段的数组  
+@days{'Jan','Feb'}  包含（$days{'Jan'},$days{'Feb'}）片段的散列 
+构造  含义  
+%days  （Jan=>31，Feb=>$leap?29:28,...）  
+代码  含义  
+\n  换行符（常作LF）  
+\r  回车（常作CR）  
+\t  水平制表符  
+\f  进纸  
+\b  退格  
+\a  警报（响铃）  
+\e  ESC字符  
+\033  八进制的ESC  
+\x7f  十六进制DEL  
+\cC  Control-C  
+\x{263a}  Unicode（笑脸）  
+\N{NAME}  命名字符 
+代码  含义  
+\u  强迫下一个字符为大写（Unicode里的“标题”）  
+\l  强制下一个字符小写  
+\U  强制后面所有字符大写  
+\L  强制后面所有字符小写  
+\Q  所有后面的非字母数字字符加反斜杠  
+\E  结束\U，\L，或\Q。  
+常用  通用  含义  替换  
+' '  q//  文本字串  否  
+" "  qq//  文本字串  是  
+` `  qx//  执行命令  是  
+()  qw//  单词数组  否  
+//  m//  模式匹配  是  
+s///  s///  模式替换  是  
+y///  tr///  字符转换  否  
+" "  qr//  正则表达式  是  
+
+
+
+
+
+
+#! /usr/bin/perl
+@lines= `perldoc –u –f atan2`; # 反引号`通常在美式键盘数字1 的左边。不要和单引号‘混淆了
+foreach(@lines){
+s/\w<([^>]+)/\U$1/g;
+print;
+}
+
+
+chomp() 这个函数是去到\n 的，如果两个\n只去掉一个。
+
+pop 是在数组的结尾，弹出
+push 是在数组的结尾，压入。
+
+shift  是在数组的开头，弹出
+unshift 是在数组的开头，压入
+
+reverse 逆转 
+子程序返回值为最后一个被计算的表达式。
+在if 代码块内部，其语句没有分号。Perl 允许省略括号中最后一条语句的分号，在实际代码中，通常仅当此代码块仅包含一条语句时才省略此分号
+
+本书重点
+my ($num) = @_; #列表context,同($sum) = @_；此为特殊列表，表内只有一个变量
+my $num = @_; #标量context ，同$num = @_；
+例如 @_=qw(a b c d e f g)
+还有补充就是 ($num)里得到的是值为a
+              $num里得到的是@_的个数为7
+
+记住，如果没有使用括号，my 仅定义一个变量◆
+my $first,$second 没有定义$second
+my ($first,$second) 两个都定义了.
+$#name 是name这个数组的最后一个索引
+#@name 是对数组name进行索引
+
+行输入操作在到达文件的结尾时将返回undef ，这对于从循环退出时非常方便的
+ while (defined($line=<STDIN>)){
+     print "I saw $line";
+  }
+可简写
+  while (<STDIN>){
+     print "I saw $_";
+  }
+
+在进行深入讨论前，我们要澄清一些事：这种简写只在特定的情况下有效，默认的情况下不会将一行读入变量$_。仅当while
+循环的条件判断部分只包含行输入操作才有效◆。如果在条件判断部分还有别的内容，则上述简写无效。
+
+这是Unix 中很少人知道的一个事实：如许多标准的工具，如cat ,sed ,也使用这种约定，连接号（-）代表标准输入流。
+
+如果在第二次使用<>之前重新初始化@ARGV ，则能得到正确的结果
+@ARGV 是一个数组，但是好像是perl 内定的一个数组.
+如果需要更多的这种选项，那很可能你是使用模块按照标准方法处理它们。参看Getopt::Long 和Getopt::Std 这两个模块，它们属发布的Perl 中的一部分于标准
+
+print @array; #打印出元素的列表
+print “@array”；#打印一个字符串(包含一个内插的数组)
+第一个语句打印出所有的元素，一个接着一个，其中没有空格。第二个打印出一个元素，它为@array 的所有元素，其被存
+在一个字符串中。也就是说，打印出@array 的所有元素，并由空格分开◆。如果@array 包含qw /fred barney betty /◆，则
+第一个例子输出为：fredbarneybetty ，而第二个例子输出为fred barney betty （由空格分开）
+
+Perl 在内插数组时，它会在元素之间加入空格。
+如果字符串包含了换行符 print @arrey;
+如果字符串没有换行符   print "@arrey\n";
+
+事实上，Perl Power Tools (PPT)项目的目标是将所有传统的Unix 工具在Perl 中实现，它们几乎实现了所有的工具（包括大多数的游戏），
+当在如何实现shell 时被难住了。PPT 项目是成功的，因为在大多数non-UNIX 系统中实现了标准的Unix 工具。
+
+\d 任意数字 [0-9]
+\D 除数字外的任意字符 [^0-9]
+\w 任意单词字符 [_0-9a-zA-Z]
+\W 任意非单词字符 [^_0-9a-zA-Z]
+\s 空白 [ \r\t\n\f]
+\S 非空白 [^ \r\t\n\f]
+g 匹配所有可能的模式
+i 忽略大小写
+m 将串视为多行
+o 只赋值一次
+s 将串视为单行
+x 忽略模式中的空白
+
+因此.*将匹配任意字符任意多数
+但是.不匹配换行符
+这里提到的三个变量名为:$&, $`, $'
+if(“Hello there, neigbor”=~ /\S(\w+),/){
+print “That actually matched ‘$&’.\n”;
+}
+
+匹配的部分是“there,”（空格，单词，和一个逗号）。变量$1 中的值为there ，而$&为整个被匹配的部分。
+匹配部分的前一部分存放在$`之中，后一部分被存到$'。另一种说法是，$`中含有正则表达式引擎在匹配成功前所找到的变
+量，而$'为此模式还没有匹配的剩余部分。如果将这三个变量放在一起，你将得到原始字符串：
+if (“Hello there, neighbor”=~ /\S(\w+),/){
+pirnt “That was ($`)($&)($’)”;
+}
+输出的消息为(Hello)( there,)( neighbor)，为这三个自动匹配变量的值。三个变量的值可能是空的，和之前数字匹配变量的例
+子一样。它们和数字匹配变量有相同的作用域。通常，在下次成功匹配前其值不变。
+
+现在，我们讨论我们之前说的“免费”问题。是的，自由是要代价的。这里的代价是，如果你使用了这三个自动匹配变量
+中的任意一个，无论在程序的什么地方，其它地方的正则表达式的运行数度会变慢一些。虽然，变慢的程度不大，但已经
+足够让人担忧，因此许多Perl 程序员从不使用这些自动匹配变量◆。相反的，使用的替代的方法。例如，如果需要使用$&，那么在整个模式上加上括号，并使用$1 代替。
+这些在替换中出现的大小写转换的修饰符，也可在双引号中使用：
+print “Hello, \L\u$name\E, would you like to play a game?\n”;
+默认时，split 对$_操作，模式为空白：
+my @fields = split; #同split /\s+/, $_；
+
+my @values = split /:/, $x; #@values 为(4, 6, 8, 10, 12)
+my $z =join “-”, @values; #$z 为“4-6-8-10-12”
+split 和join 可以一起使用，但不要忘了join 的第一个参数是字符串，而非模式
+
+我们将整个文件读入一个变量之中
+open FILE, $filename
+or die “Can’t open ‘$filename’: $!”;  #如果打不开文件，出提示打不开的原因
+my $lines = join '', <FILE>;
+$lines =~ s/^/$filename: /gm;
+
+这是?号在正则表达式中的第四种用法：问号，表示0 或1 的数量词，非贪婪修饰符，现在是开头符?:
+
+unless ($mon =~ /^Feb/){
+  print “This month has at least thirty days.\n”;
+ }else{ 
+print “Do you see what’s going on here?\n”;
+}
+
+同下面
+
+if($mon =~ /^Feb/){
+  print “Do you see what’s going on here?\n”;
+}else{
+print “This month has at least thirty days.\n”;
+}
+
+Pascal 程序员应当小心：在Pascal 中，重复的until 语句至少要执行一次迭代，但Perl 中的until 循环可能一次也不执行，如果循环执行前的条件表达式的值为真。
+
+print “$n is a negative number.\n”if $n<0;
+同下面
+if($n < 0){
+print “$n is a negative number. \n”;
+}
+
+还有一些其它的修饰语：
+&error(“Invalid input”) unless &valid($input);
+$i *= 2 unitl $i > $j;
+print “”, ($n += 2) while $n <10;
+&greet($_) foreach @person;
+
+Perl 没有像C 语言“switch ”结构中的“fall-through (直接跳入)”下一个代码块的功能
+for
+这三个部分（初始化，条件判断，步长）的任意部分均能为空，但分号不能省略。
+
+前面三个操作符&&, || , ?:，均有一个共同的特殊性质：根据左侧的值（true 或false ），来判断是否执行右侧代码。&&表示，如果左面的值为真，则执行右侧的代码，
+||表示左面的值为假时，则执行右侧的代码。
+===================================================================
+foreach(1..10){
+print “Iteration number $_.\n\n”;
+print “Please choose: last, next, redo, or none of the above?”;
+chomp(my $choice = <STDIN>);
+print “\n”;
+last if $choice =~ /last/i;
+next if $choice =~ /next/i;
+redo if $choice =~ /redo/i;
+print “That was’t any of the choices… onward!\n\n”;
+}
+print “That’s all, folks\n”;
+============================================================
+|      文件检测选项及其含义                                |
+============================================================
+
+检测选项含义
+-r 文件或目录对此（有效的）用户（effective user ）或组是可读的
+-w 文件或目录对此（有效的）用户或组是可写的
+-x 文件或目录对此（有效的）用户或组是可执行的
+-o 文件或目录由本（有效的）用户所有
+-R 文件或目录对此用户(real user)或组是可读的
+-W 文件或目录对此用户或组是可写的
+-X 文件或目录对此用户或组是可执行的
+-O 文件或目录由本用户所有
+-e 文件或目录名存在
+-z 文件存在，大小为0 （目录恒为false ）
+-s 文件或目录存在，大小大于0 （值为文件的大小，单位：字节）
+-f 为普通文本
+-d 为目录
+-l 为符号链接
+-S 为socket
+-p 为管道(Entry is a named pipe(a “fifo”))
+-b 为block-special 文件（如挂载磁盘）
+-c 为character-special 文件（如I/O 设备）
+-u setuid 的文件或目录
+-g setgid 的文件或目录
+-k File or directory has the sticky bit set
+-t 文件句柄为TTY(系统函数isatty()的返回结果；不能对文件名使用这个测试)
+-T 文件有些像“文本”文件
+-B 文件有些像“二进制”文件
+-M 修改的时间（单位：天）
+-A 访问的时间（单位：天）
+-C 索引节点修改时间（单位：天）
+=========================================================================
+
+
+my @all_files = <*>; ##基本上同@all_files = glob “*”一样；
+
+my @files = <FRED/*>; ##glob
+my @lines = <FRED>; ##文件句柄读入
+my $name = “FRED”;
+my @files = <$name/*> ##glob
+
+如果需要，可以使用readline 得到间接文件句柄读入的操作
+
+my $name = “FRED”;
+my @lines = readline FRED; #从FRED 读入
+my @lines = readline $name; #从FRED 读入
+
+（使用opendir 而非open ），从中读入（使用readdir 而非readline ），关闭（使用closedir 而非close ）。不是读入文件的内容，而是将一个目录中的文件名（以及一些其它东西）读入，如下例：
+my $dir_to_process = “/etc”;
+opendir DH, $dir_to_process or die “Cannot open $dir_to_process: $!”;
+foreach $file(readdir DH) {
+print “one file in $dir_to_process is $file\n”;
+}
+closedir DH;
+
+◆某些人知道rm 通常会提示你是否删除这一类的文件。但rm 是一个命令，而unlink 是系统调用。系统调用从不询问权限，它们也从不道歉说自己错了。
+
+◆这不是唯一的一个经常询问的问题；怎样一次将一批文件重命名是在这些新闻组中最常问的。这也是在大多数新闻组的FAQ 中，这通常
+是第一个回答的问题。直到现在，它仍然占据第一的位置。
+foreach my $file (glob “*.old”){
+my $newfile = $file;
+$newfile =~ s/\ .old$/.new/;
+if (-e $newfile){
+warn “can’t rename $file to $newfile: $newfile exists\n”;
+}elsif(rename $file, $newfile){
+##成功，什么也不做
+} else {
+warn “rename $file to $newfile failed: $!\n”;
+}
+}
+
+要找出符号连接指向的地方，使用readlink 函数。它会告诉你符号连接指向的地方，如果参数不是符号连接其返回undef ：
+my $where = readlink “carroll ”; #得到“dodgson”
+my $perl = readlink “/usr/local/bin/perl”#可能得到Perl 放置的地方
+
+my $name = “fred”;
+my $permissions = “0755”; #危险…不能工作
+mkdir $name, $permissions;
+
+mkdir $name, oct($permissions);
+
+你可以使用chown 函数改变一批文件的所有者及所在的组
+
+my $now = time;
+my $ago = $now -24*60*60; #一天的秒数
+utime $now, $ago, glob “*”; #设成当前访问的，一天之前修改的
+
+my $stuff = “Howdy world!”;
+my $where1 = index($stuff, “w”); #$where1 得到2
+my $where2 = index($stuff, “w”, $where+1); #$where 得到6
+my $where3 = index($stuff, “w”, $where+1); #$where 为-1(没有找到)
+
+my $fred = “Yabba dabba doo!”;
+my $where1 = rindex($fred, “abba”); #$where1 得到7
+my $where2 = rindex($fred, “abba”, $where - 1); #$where2 得到1
+my $where3 =rindex($fred, “abba”, $where2-1); #$whrere3 得到-1
+
+$part = substr($string, $initial_position, $length);
+它有三个参数：一个字符串，一个从0 开始编号的初始位置（类似于index 的返回值），以及子串的长度。返回值是一个子串：
+my $rock = substr “Fred J. Flintstone”, 13, 1000; #得到“stone”
+
+在上例中，如果请求的长度（例子中为，1000 ）超过了字符串的长度，Perl 不会有任何抱怨信息，但得到的是一个比你所希望的更短的结果。如果想明确要求到达字符串的结尾处，无论其或长或短，可以像下例那样省略掉第三个参数（参数）：
+my $pebble = substr “Fred J. Flintsone”, 13; #得到“stone”
+
+初始位置可以是负的，表示从字符串结尾处开始（此时，-1 表示最后一个字符）◆。在下例中，位置-3 表示倒数第三个字
+符的位置，也就是字符i 的位置：
+
+my$ $long = “some very very long string”;
+my $right = substr($long, index($long, “l”));
+
+my $string = “Hello, world!”;
+substr($string, 0, 5) = “Goodbye”; # $string 现在变成了“Goodbye, world!”
+
+除了给substr 赋值外（第一次看起来有些怪异），也可以用更传统的方法◆来使用susbtr ：使用4 个参数，第四个参数是替
+换的字符串：
+◆按照惯例，我们的意思是“函数调用”的观点，而不是“Perl ”的观点，因为这个功能在Perl 的早期就有了。
+my $previous_value = substr($string, 0, 5, “Goodbye”);
+
+sub big_money {
+my $number = sprintf “%.2f”, shift @_;
+#在do-nothing 循环中，每一次加入一个逗号
+1 while $number =~ s/^(-?\d+) (\d\d\d)/$1,$2/;  (#这个1，这是没有用的。顺便提一句，Perl 会优化这个常值表达式，使之不占用任何运行时间。)
+#将美元符号放入合适的位置
+$number =~ s/^(-?)/$1\$/;
+$number;
+}
+
+要使用一个排序子程序，将它（不使用&）放在关键字sort 和你要排序的列表之间。这个例子将一列数字按照数字顺序将
+其排序，并将结果放入@result 中：
+my @result = sort by_number @some_numbers;
+
+sub by_number {$a <=> $b } 比较数字
+
+sub by_char {$a cmp $b }  比较字符
+
+my @numbers = sort { $a <=> $b } @some_numbers;
+
+my @descending = reverse sort { $a <=> $b } @some_numbers;
+
+
+
+这里有一个技巧。比较操作符（<=>和cmp ）是很“近视的”，它们不知道哪一个操作数是$a ，哪一个是$b 。它们只知道哪
+一个值在左边，哪一个在右边。如果$a 和$b 交换位置，比较操作符每一次得到的结果则是相反的。这意味着另一种得到逆
+序的方式：my @descending = sort {$b <=> $a } @some_nubmers;
+因为reverse 被当作sort 的一个修饰符，特殊的简写方式阻止你使用一种方式排序但得到的却是另一种结果。
+
+
+==============================================================
+my %score = (“barney”=>, “fred”=>205, “dino”=> 30);
+my @winners = sort by_score keys %score;
+实际上并不能根据score 对hash 进行排序；这只是文字上的简写。你不能对hash 排序。我们在前面的hashes 中使用sort时，只是对hash 的keys 排序（按照字母表顺序(ASCIIbetical)排序）。现在我们将对hash 的keys 排序，其顺序由其对应的
+hash 中的值决定。此时，结果是根据保龄球的成绩这三人的名字的有序列表，。
+写出这个排序子程序是非常容易的。我们需要的是针对score 而不是名字，使用数字比较。不是比较$a 和$b(选手的名字)，我们想比较$score($a)和$score($b)（它们的成绩）。如果你这样思考，答案则呼之欲出，如下：
+sub by_socre { $score{$b} <=> $score{$a}}
+
+让我们仔细的分析它，看看它是如何工作的。想象第一次调用它时，Perl 给$a 赋值barney ，给$b 赋值fred 。比较是$score{“fred”}
+<=> $score{“barney”}，它是（通过hash 得到）205 <=>195 。<=>是“近视的”，因此它发现205 在195 之前，则说：“不，这不是正确的顺序；$b 应当在$a 之前。这告诉Perl fred 应当在barney 之前。可能下一次调用子程序时，$a 是barney ，而$b 是dino 。“近视的”数字比较符看到的是30<=>195 ，因此报告它们是正确的顺序：$a 确实是在$b 之前。因此，barney 在dino 之前。此刻，Perl 有了足够的信息来得到列表的顺序：fred 是胜利者，barney第二名，而dino 第三。
+为什么比较运算中$score{$b}在$score{$a}之前，而非别的方式？因为我们想按保龄球成绩的降序排列，从最高成绩依次向
+下。你可以（经过一些训练）一眼就能读懂这些代码：$score{$b} <=> $score{$a}的意思是根据score ，将它们按照数字逆序
+排序。
+my %score = {
+“barney”=>95, “fred”=> 205,
+“dino”=>30, “bam-bamm”=> 195;
+};
+bam-bamm 和barney 的成绩相同。哪一人应该排在前面呢。
+my @winners = sort by_score_and_name keys %score;
+sub by_score_and_name {
+$score{$b} <=> $score{$a} #按照降序的成绩
+or
+$a cmp $b; #字母顺序的名字
+}
+============================================================================
+system ‘ls –l $HOME’;
+我们这里将双引号变成了单引号，因为$HOME 是一个shell 变量。否则，shell 看不到美元符号，因为Perl 会将它用值进行替换。当然，我们也可以这样写：
+system “ls –l \$HOME”;
+
+system‘for i in *; do echo = = $i = =; cat $i; done’;
+这里，我们也是使用的单引号，因为需要美元符号对shell 有含义，而对Perl 没有。双引号允许Perl 用当前的值来替换$i而不是让shell 用它自己的值来代替。顺便说一句，这个小的shell 脚本会遍历当前目录下所有的普通文件，输出每一个文
+件的名字和内容；如果不相信，你可以尝试一下。
+
+因此@name[2, 5]的含义同($names[2], $name[5])一样
+
